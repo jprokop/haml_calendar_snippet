@@ -1,0 +1,35 @@
+-time       = defined?(@time)? @time : Time.now
+-t_start    = time.at_beginning_of_month
+-t_end      = time.at_end_of_month
+-start_wday = t_start.wday
+-end_wday   = t_end.wday
+-day_names  = %w(Pon Wto Śro Czw Pią Sob Nie)
+
+.html_calendar
+  .header
+    %a.left{:href => url_for(:action => :index, :date =>  l(t_start -1.month, :format => :url))}
+      ⇦
+    =l time, :format => :month_only
+    %a.right{:href => url_for(:action => :index, :date =>  l(t_start + 1.month, :format => :url))}
+      ⇨
+  .content
+    .labels
+      -day_names.each do |d|
+        .label
+          =d
+    .days
+      -((start_wday - 1) % 7).times do |n|
+        .day.day_prev_month
+          .text_wrap
+            &nbsp;
+      -(t_end.yday - t_start.yday + 1).times do |n|
+        .day.month_day
+          %a{:href => url_for(:action => :index, :date => l(t_start + n.days, :format => :url))}
+            .text_wrap
+              =n + 1
+      -( (-end_wday) % 7 ).times do |n|
+        .day.next_month
+          .text_wrap
+            &nbsp;
+      .clear
+

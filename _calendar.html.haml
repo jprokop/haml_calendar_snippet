@@ -19,11 +19,11 @@
           =d
     .days
       -((start_wday - 1) % 7).times do |n|
-        .day.day_prev_month
+        .day.previous_moth
           .text_wrap
             &nbsp;
       -(t_end.yday - t_start.yday + 1).times do |n|
-        .day.month_day
+        .day.current_month
           %a{:href => url_for(:action => :index, :date => l(t_start + n.days, :format => :url))}
             .text_wrap
               =n + 1
